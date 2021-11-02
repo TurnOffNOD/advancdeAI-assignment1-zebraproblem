@@ -117,7 +117,7 @@ def measure_time(f):
     f()
     e = time.perf_counter()
     elapsed_time = e - s
-    print(f"elapsed time: {elapsed_time}")
+    print(f"elapsed time: {elapsed_time:.4f} secs")
 
 
 if __name__ == '__main__':
