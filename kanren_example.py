@@ -57,7 +57,7 @@ def conde_logical_constructor():
     run(1, x, grandparent(x, 'Bart'))
 
 
-def solve_zebra_problem():
+def solve_who_owns_zebra():
     """
     有五间房子。
     英国人住在红房子里。
@@ -122,4 +122,4 @@ def measure_time(f):
 
 
 if __name__ == '__main__':
-    measure_time(solve_zebra_problem)
+    measure_time(solve_who_owns_zebra)
