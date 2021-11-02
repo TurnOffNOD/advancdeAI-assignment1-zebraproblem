@@ -12,6 +12,7 @@ def equality_check():
 
 
 def equality_check_with2facts():
+    x = var()
     z = var()
     run(1, x, eq(x, z), eq(z, 3))
 
