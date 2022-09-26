@@ -58,25 +58,6 @@ def conde_logical_constructor():
 
 
 def solve_who_owns_zebra():
-    """
-    有五间房子。
-    英国人住在红房子里。
-    瑞典人有一只狗。
-    丹麦人喝茶。
-    绿房子在白房子的左边。
-    他们在绿房子里喝咖啡。
-    吸Pall Mall的人有鸟。
-    吸Dunhill在的人黄色房子里。
-    在中间的房子里，他们喝牛奶。
-    挪威人住在第一宫。
-    那个抽Blend的男人住在猫屋旁边的房子里。
-    在他们有一匹马的房子旁边的房子里，他们吸Dunhill烟。
-    抽Blue Master的人喝啤酒。
-    德国人吸Prince烟。
-    挪威人住在蓝房子旁边。
-    他们在房子旁边的房子里喝水，在那里吸Blend烟。
-    :return:
-    """
     houses = var()
 
     def left(q, p, list):
@@ -86,29 +67,47 @@ def solve_who_owns_zebra():
         return conde([left(q, p, list)], [left(p, q, list)])
 
     rules_zebraproblem = lall(
-        (eq, (var(), var(), var(), var(), var()), houses),  # 5个var（）分别代表 人、烟、饮料、动物、屋子颜色
-        (membero, ('Englishman', var(), var(), var(), 'red'), houses),
-        (membero, ('Swede', var(), var(), 'dog', var()), houses),
-        (membero, ('Dane', var(), 'tea', var(), var()), houses),
-        (left, (var(), var(), var(), var(), 'green'),
-         (var(), var(), var(), var(), 'white'), houses),
-        (membero, (var(), var(), 'coffee', var(), 'green'), houses),
-        (membero, (var(), 'Pall Mall', var(), 'birds', var()), houses),
-        (membero, (var(), 'Dunhill', var(), var(), 'yellow'), houses),
-        (eq, (var(), var(), (var(), var(), 'milk', var(), var()), var(), var()), houses),
-        (eq, (('Norwegian', var(), var(), var(), var()), var(), var(), var(), var()), houses),
-        (next, (var(), 'Blend', var(), var(), var()),
-         (var(), var(), var(), 'cats', var()), houses),
-        (next, (var(), 'Dunhill', var(), var(), var()),
-         (var(), var(), var(), 'horse', var()), houses),
-        (membero, (var(), 'Blue Master', 'beer', var(), var()), houses),
-        (membero, ('German', 'Prince', var(), var(), var()), houses),
+        (membero, ('Britain', var(), var(), var(), 'red'), houses),  # 英国人住在红房子里
+        
+        (membero, ('Spain', var(), var(), 'dog', var()), houses),  # 西班牙人养了一条狗
+        
+        (membero, ('Japan', 'painter', var(), var(), var()), houses),  # 日本人是一个油漆工
+        
+        (membero, ('Italy', var(), 'tea', var(), var()), houses),  # 意大利人喝茶。
+        
+        (membero, (var(), 'Photographer', var(), 'snail', var()), houses),  # 摄影师养了一只蜗牛
+        
+        (membero, (var(), 'diplomat', var(), var(), 'yellow'), houses),  # 外交官住在黄房子里
+        
+        (membero, (var(), var(), 'coffee', var(), 'green'), houses),  # 喜欢喝咖啡的人住在绿房子里
+        
+        (membero, (var(), 'Violinist', 'juice', var(), var()), houses),  # 小提琴家喜欢喝橘子汁
+        
+        (eq, (('Norwegian', var(), var(), var(), var())
+              , var(), var(), var(), var()), houses),  # 挪威人住在左边的第一个房子里
+        
+        (eq, (var(), var(),(var(), var(), 'milk', var(), var()),
+              var(), var()), houses),  # 中间那个房子的人喜欢喝牛奶
+        
+        (left,  # 绿房子在白房子的右边
+         (var(), var(), var(), var(), 'green'),
+         (var(), var(), var(), var(), 'white'),
+         houses),
+        
         (next, ('Norwegian', var(), var(), var(), var()),
-         (var(), var(), var(), var(), 'blue'), houses),
-        (next, (var(), 'Blend', var(), var(), var()),
-         (var(), var(), 'water', var(), var()), houses),
-        (membero, (var(), var(), var(), 'zebra', var()), houses)
+         (var(), var(), var(), var(), 'blue'), houses),  # 挪威人住在蓝房子旁边。
+        
+        (next, (var(), 'physician', var(), var(), var()),
+         (var(), var(), var(), 'fox', var()), houses),   # 养狐狸的人所住的房子与医生的房子相邻
+        
+        (next, (var(), 'diplomat', var(), var(), var()),
+         (var(), var(), var(), 'horse', var()), houses),  # 养马的人所住的房子与外交官的房子相邻
+        
+        (membero, (var(), var(), var(), 'zebra', var()), houses),  # 有人养斑马
+        (membero, (var(), var(), 'water', var(), var()), houses)  # 有人喝水
+        
     )
+    
     solutions = run(0, houses, rules_zebraproblem)
     output_zebra = [house for house in solutions[0] if 'zebra' in house][0][0]
     print (output_zebra)
